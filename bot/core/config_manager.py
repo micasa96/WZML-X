@@ -110,6 +110,9 @@ class Config:
     LEECH_SUFFIX = ""
     LEECH_FONT = ""
     LEECH_SPLIT_SIZE = 2097152000
+    # Case-insensitive text/domains removed from text subtitle cues and
+    # track titles before upload. Empty disables the cleanup.
+    SUBTITLE_SPAM_FILTER = []
     MEDIA_GROUP = False
     USE_HYPER = True
     HYPER_THREADS = 0

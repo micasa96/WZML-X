@@ -92,6 +92,7 @@ DEFAULT_VALUES = {
     "QUEUE_DOWNLOAD": 0,
     "QUEUE_UPLOAD": 0,
     "USER_MAX_TASKS": 0,
+    "SUBTITLE_SPAM_FILTER": [],
 }
 
 BOOL_VARS = [
@@ -233,6 +234,7 @@ DEFAULT_DESP = {
     "LEECH_PREFIX": "Prefix added to leeched file names.",
     "TMDB_ACCESS_TOKEN": "TMDb API key (v3) or Read Access Token (v4), used by AUTO_THUMBNAIL.",
     "AUTO_THUMBNAIL": "Fetch a poster from TMDb as thumbnail when no other thumbnail exists. Default: False.",
+    "SUBTITLE_SPAM_FILTER": "Case-insensitive list of text/domains removed from text subtitle cues before upload. Matching fragments are also stripped from track titles; audio tracks are relabeled by language. Empty disables it. Example: [\"sitiospam.com\", \"Subtitulos por\"]",
     "LEECH_CAPTION": "Custom caption for leeched files. Supports HTML.",
     "LEECH_SUFFIX": "Suffix added to leeched file names.",
     "LEECH_FONT": "Font style for captions: b, i, u, s, code, spoiler.",

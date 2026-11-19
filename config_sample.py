@@ -199,6 +199,12 @@ THUMBNAIL_LAYOUT = ""
 TMDB_ACCESS_TOKEN = ""
 AUTO_THUMBNAIL = False
 
+# Case-insensitive list of text/domains removed before upload. Any subtitle
+# cue containing one is deleted; matching fragments are stripped from track
+# titles. Audio tracks are relabeled by language. Empty disables it.
+# Example: ["sitiospam.com", "Subtitulos por"]
+SUBTITLE_SPAM_FILTER = []
+
 # Log Channels
 LEECH_LOG_CHAT = ""
 # Named leech dump chats, selectable per task with the -ud flag.

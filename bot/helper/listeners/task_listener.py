@@ -42,6 +42,7 @@ from ..ext_utils.files_utils import (
 from ..ext_utils.links_utils import is_gdrive_id
 from ..ext_utils.status_utils import get_readable_file_size, get_readable_time
 from ..ext_utils.task_manager import check_running_tasks, start_from_queued
+from ..ext_utils.subtitle_cleaner import clean_subtitles
 from ..mirror_leech_utils.uphoster_utils.multi_upload import MultiUphosterUpload
 from ..mirror_leech_utils.gdrive_utils.upload import GoogleDriveUpload
 from ..mirror_leech_utils.rclone_utils.transfer import RcloneTransferHelper
@@ -275,6 +276,17 @@ class TaskListener(TaskConfig):
             if self.is_cancelled:
                 return
 
+            self.name = up_path.replace(f"{up_dir.rstrip('/')}/", "").split("/", 1)[0]
+            self.size = await get_path_size(up_path)
+            self.clear()
+
+        if Config.SUBTITLE_SPAM_FILTER and self.is_file:
+            up_path = await clean_subtitles(
+                self, up_path, Config.SUBTITLE_SPAM_FILTER
+            )
+            if self.is_cancelled:
+                return
+            self.is_file = await aiopath.isfile(up_path)
             self.name = up_path.replace(f"{up_dir.rstrip('/')}/", "").split("/", 1)[0]
             self.size = await get_path_size(up_path)
             self.clear()
