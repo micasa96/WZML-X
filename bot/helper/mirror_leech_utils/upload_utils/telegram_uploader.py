@@ -158,7 +158,21 @@ class TelegramUploader:
                 r"\{([^}]+)\}", lambda m: f"{{{m.group(1).lower()}}}", parts[0]
             )
             up_path = ospath.join(dirpath, pre_file_)
-            dur, qual, lang, subs = await get_media_info(up_path, True)
+            split_match = re_match(r"^(.+)\.(\d{3})$", ospath.basename(up_path))
+            pre_quality = None
+            if split_match:
+                base_name = split_match.group(1)
+                pre_quality = getattr(
+                    self._listener, "pre_split_quality", {}
+                ).get(base_name)
+                if not pre_quality:
+                    first_part = ospath.join(dirpath, f"{base_name}.001")
+                    if await aiopath.exists(first_part):
+                        _, pre_quality, _, _ = await get_media_info(first_part, True)
+            if pre_quality:
+                dur, qual, lang, subs = 0, pre_quality, "", ""
+            else:
+                dur, qual, lang, subs = await get_media_info(up_path, True)
             cap_mono = parts[0].format(
                 filename=cap_file_,
                 size=get_readable_file_size(await aiopath.getsize(up_path)),
